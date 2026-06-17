@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>컨빌 디자인 · 이용 가이드</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css");
+
+  :root{
+    --paper:#F5F3EE;
+    --paper-deep:#ECE8E0;
+    --card:#FCFBF8;
+    --ink:#242220;
+    --ink-soft:#5A564E;
+    --sage:#41544A;
+    --sage-deep:#33433B;
+    --sage-light:#6E8270;
+    --brass:#A4854E;
+    --brass-soft:#C2A876;
+    --line:#D9D3C6;
+    --line-soft:#E6E0D4;
+    --warn-bg:#F2EDE2;
+    --red:#B5453B;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0;word-break: auto-phrase;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.78;
+    -webkit-font-smoothing:antialiased;
+    font-size:18.6px;
+  }
+  .wrap{max-width:780px;margin:0 auto;padding:0 24px;}
+  .mono{font-family:"Space Mono",monospace;letter-spacing:0.12em;text-transform:uppercase;}
+  .serif{font-family:"Gowun Batang","Malgun Gothic","맑은 고딕",serif;}
+
+  @media print{
+    .serif,
+    .hero h1,
+    h2.title,
+    .brand-intro .big,
+    .toc .tn,
+    .rules::after,
+    .step-circle .n,
+    details.faq > summary .q,
+    .foot-card .fbrand{
+      font-family:"Malgun Gothic","맑은 고딕",sans-serif !important;
+      letter-spacing:-0.02em;
+    }
+  }
+  a{color:inherit;}
+  :focus-visible{outline:2px solid var(--brass);outline-offset:3px;border-radius:2px;}
+
+  /* ─── 상단 네비 ─── */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:rgba(245,243,238,0.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar .inner{
+    max-width:780px;margin:0 auto;padding:0 24px;
+    display:flex;align-items:center;gap:18px;height:58px;
+  }
+  .topbar .logo{
+    display:flex;align-items:center;gap:9px;flex:none;
+  }
+  .topbar .logo .dot{
+    width:22px;height:22px;border-radius:50%;border:1.4px solid var(--sage);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .topbar .logo .dot span{width:7px;height:7px;border-radius:50%;background:var(--brass);}
+  .topbar .logo b{font-size:14.5px;font-weight:700;color:var(--sage);letter-spacing:0.04em;}
+  .topnav{
+    display:flex;gap:4px;overflow-x:auto;margin-left:auto;
+    scrollbar-width:none;
+  }
+  .topnav::-webkit-scrollbar{display:none;}
+  .topnav a{
+    font-size:13.5px;color:var(--ink-soft);text-decoration:none;
+    padding:7px 12px;border-radius:20px;white-space:nowrap;font-weight:500;
+    transition:background .2s,color .2s;
+  }
+  .topnav a:hover{background:var(--paper-deep);color:var(--sage);}
+
+  /* ─── HERO ─── */
+  .hero{padding:78px 0 64px;border-bottom:1px solid var(--line);position:relative;}
+  .hero::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--sage);}
+  .hero .kicker{font-size:13px;color:var(--brass);font-weight:700;margin-bottom:28px;}
+  .hero h1{
+    font-family:"Gowun Batang",serif;font-weight:700;
+    font-size:clamp(38px,7vw,60px);line-height:1.28;letter-spacing:-0.01em;margin-bottom:24px;
+  }
+  .hero h1 em{font-style:normal;color:var(--sage);}
+  .hero p.sub{font-size:18.5px;color:var(--ink-soft);max-width:34em;margin-bottom:26px;}
+  .read-badge{
+    display:inline-flex;align-items:center;gap:9px;
+    background:var(--warn-bg);border:1px solid var(--line);border-radius:30px;
+    padding:9px 18px;font-size:15px;color:var(--red);font-weight:700;
+  }
+  .read-badge .b{font-size:17px;}
+
+  /* ─── 섹션 공통 ─── */
+  section{padding:66px 0;border-bottom:1px solid var(--line);}
+  .eyebrow{font-size:12.8px;color:var(--brass);font-weight:700;margin-bottom:14px;}
+  .eyebrow .num{font-family:"Space Mono",monospace;letter-spacing:0.1em;}
+  h2.title{
+    font-family:"Gowun Batang",serif;font-size:clamp(27px,4.5vw,37px);
+    font-weight:700;line-height:1.32;letter-spacing:-0.01em;margin-bottom:20px;
+  }
+  h3.sub-title{font-size:21px;font-weight:700;margin:34px 0 12px;letter-spacing:-0.01em;}
+  .lead{font-size:18.6px;color:var(--ink-soft);max-width:39em;}
+  p.body{font-size:17px;color:var(--ink-soft);line-height:1.85;}
+  p.body + p.body{margin-top:14px;}
+  .anchor{scroll-margin-top:74px;}
+
+  /* 콜아웃 */
+  .callout{
+    display:flex;gap:14px;background:var(--card);border:1px solid var(--line);
+    border-left:3px solid var(--brass);border-radius:4px;padding:18px 22px;margin:22px 0;
+    font-size:16.5px;line-height:1.7;
+  }
+  .callout .ic{font-size:20px;flex:none;line-height:1.4;}
+  .callout.tip{border-left-color:var(--sage-light);background:#F2F4F0;}
+
+  /* 브랜드 인트로 */
+  .brand-intro .big{
+    font-family:"Gowun Batang",serif;font-size:clamp(24px,4vw,30px);
+    line-height:1.55;letter-spacing:-0.01em;color:var(--ink);margin-bottom:22px;
+  }
+  .brand-intro .big b{color:var(--sage);}
+  .brand-tag{
+    font-family:"Space Mono",monospace;font-size:14px;color:var(--brass);
+    letter-spacing:0.14em;margin-bottom:30px;
+  }
+
+  /* SNS 카드 */
+  .sns-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:30px;}
+  .sns-card{
+    display:flex;flex-direction:column;gap:6px;
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:22px 22px;text-decoration:none;transition:transform .2s,border-color .2s;
+  }
+  .sns-card:hover{transform:translateY(-2px);border-color:var(--sage-light);}
+  .sns-card .ch{font-size:12px;color:var(--brass);font-weight:700;letter-spacing:0.04em;}
+  .sns-card .nm{font-size:17.5px;font-weight:700;color:var(--ink);}
+  .sns-card .ds{font-size:14px;color:var(--ink-soft);line-height:1.55;}
+
+  /* 목차 */
+  .toc{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:30px;}
+  .toc a{
+    display:flex;align-items:center;gap:16px;text-decoration:none;
+    background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:20px 22px;transition:border-color .2s,transform .2s;
+  }
+  .toc a:hover{border-color:var(--sage-light);transform:translateY(-2px);}
+  .toc .tn{
+    font-family:"Gowun Batang",serif;font-size:26px;font-weight:700;color:var(--sage);
+    line-height:1;flex:none;
+  }
+  .toc .tt{font-size:16.5px;font-weight:700;color:var(--ink);line-height:1.4;}
+  .toc .td{font-size:13px;color:var(--ink-soft);margin-top:2px;}
+
+  /* 수정 규칙 박스 */
+  .rules{
+    background:var(--sage-deep);color:#EDEAE2;border-radius:5px;
+    padding:42px 40px;margin-top:30px;position:relative;overflow:hidden;
+  }
+  .rules::after{
+    content:"!";position:absolute;right:30px;bottom:-22px;
+    font-family:"Gowun Batang",serif;font-size:150px;line-height:1;
+    color:rgba(255,255,255,0.06);font-weight:700;
+  }
+  .rules h3{font-size:19px;color:#FBFAF6;margin-bottom:6px;font-weight:700;}
+  .rule-list{list-style:none;margin-top:20px;position:relative;z-index:1;}
+  .rule-list li{
+    display:flex;gap:16px;padding:17px 0;border-top:1px solid rgba(255,255,255,0.13);
+    font-size:16.5px;line-height:1.72;
+  }
+  .rule-list li:first-child{border-top:none;}
+  .rule-num{font-family:"Space Mono",monospace;font-size:14px;color:var(--brass-soft);flex:none;padding-top:2px;}
+  .rule-list .hl{color:#F4DFA8;font-weight:700;}
+  .rule-list strong{color:#fff;}
+
+  /* 타임라인 */
+  .timeline{margin-top:42px;position:relative;}
+  .timeline::before{content:"";position:absolute;left:31px;top:8px;bottom:24px;width:1px;background:var(--line);}
+  .step{position:relative;padding-left:84px;padding-bottom:30px;}
+  .step:last-child{padding-bottom:0;}
+  .step-circle{
+    position:absolute;left:0;top:0;width:64px;height:64px;border-radius:50%;
+    background:var(--card);border:1px solid var(--line);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:1;
+  }
+  .step-circle .l{font-family:"Space Mono",monospace;font-size:9px;color:var(--brass);letter-spacing:0.1em;}
+  .step-circle .n{font-family:"Gowun Batang",serif;font-size:26px;font-weight:700;color:var(--sage);line-height:1;}
+  details.step-d{
+    background:var(--card);border:1px solid var(--line);border-radius:5px;overflow:hidden;
+  }
+  details.step-d > summary{
+    list-style:none;cursor:pointer;padding:18px 22px;
+    display:flex;align-items:center;gap:10px;font-size:17.5px;font-weight:700;
+  }
+  details.step-d > summary::-webkit-details-marker{display:none;}
+  details.step-d > summary .tag{font-size:12.5px;font-weight:600;color:var(--brass);margin-left:2px;}
+  details.step-d > summary .chev{margin-left:auto;color:var(--sage-light);transition:transform .25s;flex:none;}
+  details.step-d[open] > summary .chev{transform:rotate(90deg);}
+  details.step-d > summary .blue{color:#3F6491;}
+  .step-content{padding:0 22px 22px;font-size:16px;color:var(--ink-soft);line-height:1.82;}
+  .step-content strong{color:var(--ink);}
+  .step-content .red{color:var(--red);font-weight:700;}
+
+  .docbox{
+    background:#F2F4F0;border:1px solid var(--line-soft);border-radius:4px;
+    padding:18px 20px;margin:16px 0;
+  }
+  .docbox .dh{font-size:14.5px;font-weight:700;color:var(--sage);margin-bottom:12px;}
+  .docbox .dh .mail{
+    font-family:"Pretendard",-apple-system,BlinkMacSystemFont,sans-serif;
+    font-size:21px;font-weight:800;color:var(--ink);
+    text-transform:none;letter-spacing:0;margin-left:8px;
+    background:#FFE874;border:none;border-radius:3px;
+    padding:3px 10px;display:inline-block;vertical-align:middle;
+    box-shadow:inset 0 -6px 0 rgba(164,133,78,0.18);
+  }
+  .doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;}
+  .doc-grid .item{display:flex;gap:9px;font-size:15px;color:var(--ink);align-items:baseline;}
+  .doc-grid .item .n{font-family:"Space Mono",monospace;font-size:12px;color:var(--brass);flex:none;}
+  .mini-note{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin-top:12px;padding-left:14px;border-left:2px solid var(--line);}
+
+  /* 모델링 vs 렌더링 */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;}
+  .cmp-card{background:var(--card);border:1px solid var(--line);border-radius:5px;overflow:hidden;}
+  .cmp-head{padding:16px 20px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;}
+  .cmp-head h4{font-size:16.5px;font-weight:700;}
+  .cmp-head .ph{font-family:"Space Mono",monospace;font-size:10px;color:var(--brass);}
+  .cmp-visual{height:110px;display:flex;align-items:center;justify-content:center;}
+  .cmp-visual.wire{background:linear-gradient(var(--line-soft) 1px,transparent 1px),linear-gradient(90deg,var(--line-soft) 1px,transparent 1px);background-size:18px 18px;background-color:#F3F1EB;}
+  .cmp-visual.render{background:linear-gradient(135deg,#5B6E60,#41544A 60%,#33433B);}
+  .wire-shape{width:84px;height:54px;border:1.5px solid var(--sage);position:relative;}
+  .wire-shape::before{content:"";position:absolute;left:-1.5px;top:-1.5px;width:84px;height:54px;border:1.5px solid var(--sage-light);transform:translate(11px,-11px);opacity:0.5;}
+  .render-shape{width:84px;height:54px;background:linear-gradient(145deg,#EDE8DD,#C9BFA8);box-shadow:0 10px 22px rgba(0,0,0,0.28),inset 0 -8px 16px rgba(0,0,0,0.15);border-radius:2px;position:relative;}
+  .render-shape::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,rgba(255,255,255,0.45),transparent 42%);border-radius:2px;}
+  .cmp-body{padding:16px 20px;font-size:14.5px;color:var(--ink-soft);line-height:1.7;}
+  .cmp-tags{margin-top:14px;display:flex;flex-wrap:wrap;gap:6px;}
+  .cmp-tags span{
+    font-size:12.8px;padding:4px 10px;border-radius:20px;
+    background:var(--paper-deep);color:var(--sage-deep);
+  }
+  /* 단계 리스트 (번호) */
+  .num-steps{list-style:none;counter-reset:ns;margin:22px 0;}
+  .num-steps li{
+    counter-increment:ns;position:relative;padding:14px 0 14px 52px;
+    border-top:1px solid var(--line);font-size:16.5px;line-height:1.7;
+  }
+  .num-steps li:first-child{border-top:none;}
+  .num-steps li::before{
+    content:counter(ns);position:absolute;left:0;top:12px;
+    width:32px;height:32px;border-radius:50%;background:var(--sage);color:#fff;
+    font-family:"Space Mono",monospace;font-size:14px;font-weight:700;
+    display:flex;align-items:center;justify-content:center;
+  }
+
+  /* 방법 카드 (수정요청 예시) */
+  .method{
+    background:var(--card);border:1px solid var(--line);border-radius:5px;
+    padding:24px 24px;margin-top:16px;
+  }
+  .method .mh{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .method .mh .mn{
+    width:34px;height:34px;border-radius:9px;background:var(--paper-deep);
+    display:flex;align-items:center;justify-content:center;flex:none;
+    font-family:"Space Mono",monospace;font-weight:700;color:var(--sage);font-size:15px;
+  }
+  .method .mh h4{font-size:18px;font-weight:700;}
+  .method p{font-size:15.5px;color:var(--ink-soft);line-height:1.75;}
+
+  /* 레퍼런스 이미지 그리드 */
+  .ref-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0 6px;
+  }
+  .ref-grid figure{
+    margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;
+    overflow:hidden;
+    display:flex;flex-direction:column;  /* 캡션을 박스 하단에 고정 */
+  }
+  .ref-grid img{
+    display:block;width:100%;background:#F3F1EB;
+    aspect-ratio:1.41;        /* ex1·ex3 평균 비율에 맞춤 — 모든 이미지 높이 통일 */
+    object-fit:cover;         /* ex2(인스타) 는 위·아래가 잘려 들어감 */
+    object-position:center;
+  }
+  .ref-grid figcaption{
+    margin-top:auto;                     /* 이미지 높이와 무관하게 캡션을 항상 박스 맨 아래로 */
+    font-size:12.5px;color:var(--ink-soft);text-align:center;padding:8px 10px;
+    border-top:1px solid var(--line-soft);font-family:"Space Mono",monospace;
+    letter-spacing:0.06em;
+  }
+  @media (max-width:640px){
+    .ref-grid{grid-template-columns:1fr;}
+  }
+  @media print{
+    .ref-grid{gap:3mm !important;margin:3mm 0 !important;grid-template-columns:repeat(3,1fr) !important;}
+    .ref-grid figure{border:1px solid #bbb !important;page-break-inside:avoid;}
+    .ref-grid img{aspect-ratio:1.41 !important;object-fit:cover !important;}
+    .ref-grid figcaption{font-size:8pt !important;padding:1mm 2mm !important;}
+  }
+
+  /* 요청사항 예시 그리드 (2×2) */
+  .req-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0 6px;
+  }
+  .req-grid figure{
+    margin:0;background:var(--card);border:1px solid var(--line);border-radius:4px;
+    overflow:hidden;
+  }
+  .req-grid img{
+    display:block;width:100%;height:auto;background:#F3F1EB;
+  }
+  .req-grid figcaption{
+    font-size:12.5px;color:var(--ink-soft);text-align:center;padding:8px 10px;
+    border-top:1px solid var(--line-soft);font-family:"Space Mono",monospace;
+    letter-spacing:0.06em;
+  }
+  @media (max-width:640px){
+    .req-grid{grid-template-columns:1fr;}
+  }
+  @media print{
+    .req-grid{gap:3mm !important;margin:3mm 0 !important;grid-template-columns:1fr 1fr !important;}
+    .req-grid figure{border:1px solid #bbb !important;page-break-inside:avoid;}
+    .req-grid img{height:auto !important;}
+    .req-grid figcaption{font-size:8pt !important;padding:1mm 2mm !important;}
+  }
+
+  /* 방법 카드: 2장 나란히 — 종횡비 기반으로 높이 자동 매칭 */
+  .method-pair{
+    display:flex;gap:10px;margin:14px 0 0;align-items:flex-start;
+  }
+  .method-pair img{
+    display:block;height:auto;min-width:0;width:100%;
+    border:1px solid var(--line);border-radius:4px;background:#F3F1EB;
+    /* --ratio = 가로/세로 비율. flex-grow를 종횡비로 두면 같은 높이일 때 가져야 할 너비 비가 되어 두 이미지의 높이가 자동으로 일치. 미지정 시 1로 같은 너비. */
+    flex:var(--ratio,1) 1 0;
+  }
+  @media (max-width:640px){
+    .method-pair{flex-direction:column;}
+    .method-pair img{flex:none !important;}
+  }
+  @media print{
+    .method-pair{gap:2.5mm !important;margin:2.5mm 0 0 !important;}
+    .method-pair img{page-break-inside:avoid;border:1px solid #bbb !important;}
+  }
+
+  /* 방법 카드: 단일 이미지 — 원본 크기 초과 금지(작은 이미지 깨짐 방지) */
+  .method-single{margin:14px 0 4px;text-align:center;}
+  .method-single img{
+    display:inline-block;width:65%;max-width:420px;height:auto;
+    border:1px solid var(--line);border-radius:4px;background:#F3F1EB;
+  }
+  @media (max-width:640px){
+    .method-single img{width:85%;}
+  }
+  @media print{
+    .method-single{margin:2.5mm 0 0 !important;}
+    .method-single img{border:1px solid #bbb !important;page-break-inside:avoid;width:55% !important;max-width:none !important;}
+  }
+
+  /* 방법 카드: ex10 — 왼쪽으로 90° 회전 */
+  /* 원본 565×772 세로 → 회전 후 가로비 772/565 컨테이너에 정확히 채움 */
+  .rot-ex10{
+    position:relative;width:70%;max-width:480px;aspect-ratio:772/565;
+    margin:10px auto 4px;
+    background:#F3F1EB;border:1px solid var(--line);border-radius:4px;
+    overflow:hidden;
+  }
+  @media (max-width:640px){
+    .rot-ex10{width:90%;}
+  }
+  .rot-ex10 img{
+    position:absolute;top:50%;left:50%;
+    width:calc(100% * 565 / 772);   /* = 컨테이너 세로 길이 */
+    height:auto;                    /* = 자동으로 컨테이너 가로 길이가 됨 */
+    transform:translate(-50%,-50%) rotate(-90deg);
+  }
+  @media print{
+    .rot-ex10{margin:2.5mm 0 0 !important;border:1px solid #bbb !important;page-break-inside:avoid;}
+  }
+
+  /* 이미지 자리 placeholder */
+  .imgph{
+    border:1.5px dashed var(--line);border-radius:5px;background:#F3F1EB;
+    padding:26px;text-align:center;color:var(--ink-soft);font-size:13.5px;margin:14px 0;
+  }
+  .imgph .pic{font-size:24px;display:block;margin-bottom:6px;opacity:0.6;}
+
+  /* FAQ */
+  details.faq{border:1px solid var(--line);border-radius:5px;background:var(--card);margin-bottom:12px;overflow:hidden;}
+  details.faq > summary{
+    list-style:none;cursor:pointer;padding:20px 24px;display:flex;align-items:center;gap:14px;
+    font-size:17.5px;font-weight:700;color:var(--ink);
+  }
+  details.faq > summary::-webkit-details-marker{display:none;}
+  details.faq > summary .q{font-family:"Gowun Batang",serif;color:var(--brass);font-size:20px;flex:none;}
+  details.faq > summary .chev{margin-left:auto;color:var(--sage-light);transition:transform .25s;flex:none;}
+  details.faq[open] > summary .chev{transform:rotate(90deg);}
+  .faq-body{padding:0 24px 22px 24px;font-size:16px;color:var(--ink-soft);line-height:1.82;}
+  .faq-body strong{color:var(--sage-deep);}
+  .faq-body a{color:var(--sage);font-weight:600;}
+
+  /* 마무리 */
+  .outro{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:40px 34px;margin-top:34px;text-align:center;}
+  .outro .serif{font-size:22px;color:var(--ink);line-height:1.6;margin-bottom:16px;display:block;}
+  .outro p{font-size:16px;color:var(--ink-soft);max-width:34em;margin:0 auto;}
+
+  /* footer */
+  footer{padding:54px 0 64px;}
+  .foot-card{text-align:center;}
+  .foot-card .fbrand{font-family:"Gowun Batang",serif;font-size:22px;font-weight:700;color:var(--sage);margin-bottom:4px;}
+  .foot-card .fco{font-size:14.5px;color:var(--ink-soft);margin-bottom:20px;}
+  .foot-links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px;}
+  .foot-links a{
+    font-size:14px;color:var(--sage);text-decoration:none;padding:8px 18px;
+    border:1px solid var(--line);border-radius:24px;transition:background .2s;
+  }
+  .foot-links a:hover{background:var(--paper-deep);}
+  .copy{font-size:12.5px;color:var(--ink-soft);}
+
+  /* 반응형 */
+  @media (max-width:640px){
+    .sns-grid,.toc,.compare,.doc-grid{grid-template-columns:1fr;}
+    .rules{padding:32px 24px;}
+    .step{padding-left:70px;}
+    .step-circle{width:54px;height:54px;}
+    .step-circle .n{font-size:22px;}
+    .timeline::before{left:26px;}
+    .topbar .logo b{display:none;}
+  }
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  /* 플로팅 버튼 (PDF 저장 / A4 미리보기) */
+  .float-btns{
+    position:fixed;right:24px;bottom:24px;z-index:100;
+    display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+  }
+  .pdf-btn,.a4-btn{
+    display:inline-flex;align-items:center;gap:8px;cursor:pointer;border:none;
+    padding:13px 20px;border-radius:30px;
+    font-family:inherit;font-size:14.5px;font-weight:700;letter-spacing:-0.01em;
+    transition:transform .2s,box-shadow .2s,background .2s,color .2s;
+  }
+  .pdf-btn{background:var(--sage);color:#fff;box-shadow:0 6px 20px rgba(51,67,59,0.28);}
+  .pdf-btn:hover{background:var(--sage-deep);transform:translateY(-2px);box-shadow:0 10px 24px rgba(51,67,59,0.34);}
+  .pdf-btn:active{transform:translateY(0);}
+  .a4-btn{background:#fff;color:var(--sage-deep);border:1.5px solid var(--sage);box-shadow:0 4px 14px rgba(51,67,59,0.18);}
+  .a4-btn:hover{background:var(--paper-deep);transform:translateY(-2px);box-shadow:0 8px 18px rgba(51,67,59,0.24);}
+  .a4-btn.on{background:var(--brass);color:#fff;border-color:var(--brass);}
+  .pdf-btn svg,.a4-btn svg{flex:none;}
+  @media (max-width:640px){
+    .float-btns{right:16px;bottom:16px;gap:8px;}
+    .pdf-btn,.a4-btn{padding:12px 18px;font-size:13.5px;}
+  }
+
+  /* A4 미리보기 모드 — body에 .a4-preview 클래스가 붙으면 종이 느낌으로 표시 */
+  body.a4-preview{
+    background:#7a7a7a !important;
+    padding:24px 0 !important;
+  }
+  body.a4-preview > .hero,
+  body.a4-preview > section,
+  body.a4-preview > footer{
+    max-width:210mm !important;
+    margin-left:auto !important;margin-right:auto !important;
+    padding-left:11mm !important;padding-right:11mm !important;
+    background:#fff !important;
+    box-sizing:border-box;
+  }
+  body.a4-preview > .hero{
+    padding-top:12mm !important;
+    box-shadow:0 -2px 0 #fff, 0 -4px 20px rgba(0,0,0,0.15);
+  }
+  body.a4-preview > footer{
+    padding-bottom:12mm !important;
+    box-shadow:0 2px 0 #fff, 0 4px 20px rgba(0,0,0,0.15);
+  }
+  body.a4-preview > section{
+    box-shadow:0 0 0 0;
+  }
+  body.a4-preview > .hero,
+  body.a4-preview > section{
+    position:relative;
+  }
+
+  /* 인쇄 (PDF 저장) — A4 맞춤
+     ※ 실제 인쇄 + A4 미리보기 모드 양쪽에서 쓰는 규칙은
+        별도 <style id="a4Styles" media="print">에 정의되어 있고,
+        JS가 media 속성을 "print" ↔ "all" 로 토글하여 화면에서도 보이게 함. */
+  @media print{
+    /* 실제 인쇄 시 화면 UI 숨김. 본문 A4 스타일은 별도 a4Styles 시트에서 처리. */
+    .float-btns,.pdf-btn,.a4-btn,.topbar,.topnav{display:none !important;}
+  }
+</style>
+
+<!-- A4 출력용 스타일시트
+     - 기본은 media="print" (실제 인쇄 시에만 적용)
+     - "A4 미리보기" 버튼을 누르면 JS가 media="all"로 바꿔 화면에서도 적용 -->
+<style id="a4Styles" media="print">
+  @page{size:A4 portrait;margin:12mm 11mm;}
+  html,body{background:#fff !important;}
+  body{
+    font-size:9.4pt;line-height:1.5;color:#000;
+    font-family:"Pretendard",-apple-system,sans-serif;
+    widows:2;orphans:2;          /* 페이지 끝/시작에 한 줄만 외롭게 떨어지지 않게 */
+  }
+  .wrap{max-width:100% !important;padding:0 !important;margin:0 !important;}
+  .reveal{opacity:1 !important;transform:none !important;}
+  a{color:inherit !important;text-decoration:none !important;}
+  img,svg{max-width:100% !important;}
+
+  /* 색상 강제 출력 */
+  *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;}
+
+  /* HERO — 컴팩트 */
+  .hero{padding:6mm 0 5mm !important;border-bottom:1px solid #999 !important;page-break-after:avoid;}
+  .hero::before{height:2px !important;}
+  .hero .kicker{font-size:8.5pt !important;margin-bottom:6mm !important;}
+  .hero h1{font-size:22pt !important;line-height:1.2 !important;margin-bottom:3mm !important;}
+  .hero p.sub{font-size:9.5pt !important;margin-bottom:3mm !important;max-width:100% !important;}
+  .read-badge{padding:2mm 4mm !important;font-size:8.8pt !important;background:#F2EDE2 !important;}
+
+  /* 섹션 공통 — 컴팩트 */
+  section{padding:5mm 0 !important;border-bottom:1px solid #ccc !important;page-break-inside:auto;}
+  .eyebrow{font-size:7.8pt !important;margin-bottom:2mm !important;}
+  h2.title{font-size:15pt !important;line-height:1.25 !important;margin-bottom:3mm !important;page-break-after:avoid;}
+  h3.sub-title{font-size:11pt !important;margin:5mm 0 2mm !important;page-break-after:avoid;}
+  .lead{font-size:9.5pt !important;max-width:100% !important;}
+  p.body{font-size:9.4pt !important;line-height:1.55 !important;}
+  p.body + p.body{margin-top:2mm !important;}
+
+  /* 브랜드 인트로 */
+  .brand-intro .big{font-size:12pt !important;line-height:1.5 !important;margin-bottom:3mm !important;}
+  .brand-tag{font-size:8.5pt !important;margin-bottom:3mm !important;}
+
+  /* SNS / TOC 그리드 — 컴팩트 */
+  .sns-grid,.toc{gap:2mm !important;margin-top:3mm !important;}
+  .sns-card{padding:2.5mm 3mm !important;page-break-inside:avoid;border:1px solid #bbb !important;}
+  .sns-card .ch{font-size:7.5pt !important;}
+  .sns-card .nm{font-size:9.5pt !important;}
+  .sns-card .ds{font-size:8.3pt !important;line-height:1.4 !important;}
+  .toc a{padding:2.5mm 3mm !important;gap:3mm !important;page-break-inside:avoid;border:1px solid #bbb !important;}
+  .toc .tn{font-size:14pt !important;}
+  .toc .tt{font-size:9.5pt !important;line-height:1.3 !important;}
+  .toc .td{font-size:8pt !important;}
+
+  /* 콜아웃 */
+  .callout{padding:2.5mm 3.5mm !important;margin:3mm 0 !important;font-size:9pt !important;line-height:1.5 !important;page-break-inside:avoid;background:#fff !important;border:1px solid #bbb !important;border-left:2.5px solid #A4854E !important;}
+  .callout.tip{background:#F2F4F0 !important;border-left-color:#6E8270 !important;}
+  .callout .ic{font-size:11pt !important;}
+
+  /* 수정 안내 박스 — 인쇄 가독성 */
+  .rules{background:#fff !important;color:#000 !important;border:1.2px solid #333 !important;padding:5mm 6mm !important;margin-top:4mm !important;page-break-inside:avoid;}
+  .rules h3{color:#000 !important;font-size:11pt !important;margin-bottom:1mm !important;}
+  .rule-list{margin-top:2mm !important;}
+  .rule-list li{padding:2mm 0 !important;font-size:9pt !important;line-height:1.5 !important;border-top:1px solid #999 !important;gap:3mm !important;}
+  .rule-list strong,.rule-list .hl{color:#000 !important;font-weight:700 !important;}
+  .rule-list .hl{text-decoration:underline;}
+  .rule-num{color:#555 !important;font-size:8pt !important;}
+  .rules::after{display:none !important;}
+
+  /* 타임라인 — 컴팩트 */
+  /* (큰 단계가 한 페이지에 들어가지 못해도 페이지 사이에 빈 공간이 생기지 않도록 분할 허용) */
+  .timeline{margin-top:4mm !important;}
+  .timeline::before{display:none !important;}
+  .step{padding-left:14mm !important;padding-bottom:3mm !important;page-break-inside:auto;}
+  .step-circle{width:11mm !important;height:11mm !important;background:#fff !important;border:1px solid #888 !important;}
+  .step-circle .l{font-size:6pt !important;color:#A4854E !important;}
+  .step-circle .n{font-size:13pt !important;color:#5A6B4A !important;}
+
+  /* details 펼친 상태로 출력 */
+  details{page-break-inside:auto;}                  /* 큰 단계는 페이지 분할 허용 */
+  details.faq{page-break-inside:avoid;}             /* FAQ는 작으니 잘리지 않게 유지 */
+  details > summary{list-style:none;page-break-after:avoid;}  /* 제목과 첫 줄은 같이 */
+  details > summary::-webkit-details-marker{display:none !important;}
+  details.step-d,details.faq{border:1px solid #bbb !important;background:#fff !important;border-radius:2px !important;}
+  details.step-d > summary{padding:2.5mm 4mm !important;font-size:10pt !important;gap:2mm !important;}
+  details.step-d > summary .tag{font-size:8pt !important;}
+  details.step-d > summary .chev,
+  details.faq > summary .chev{display:none !important;}
+  .step-content{padding:0 4mm 3mm !important;font-size:9pt !important;line-height:1.55 !important;}
+  .step-content p{margin-bottom:2mm !important;}
+  .step-content .mini-note{font-size:8.5pt !important;margin-top:2mm !important;padding-left:3mm !important;}
+
+  /* 자료 박스 — 헤더(메일)와 01~07 항목이 페이지 분할되지 않도록 통째로 유지 */
+  .docbox{padding:3mm 4mm !important;margin:2.5mm 0 !important;background:#F2F4F0 !important;border:1px solid #ccc !important;page-break-inside:avoid !important;break-inside:avoid !important;}
+  .docbox .dh{font-size:9pt !important;margin-bottom:2mm !important;}
+  .docbox .dh .mail{
+    font-family:"Pretendard",sans-serif !important;
+    font-size:13pt !important;font-weight:800 !important;
+    color:#242220 !important;background:#FFE874 !important;
+    border:none !important;padding:0.5mm 2.5mm !important;
+    margin-left:2mm !important;border-radius:1mm !important;
+  }
+  .doc-grid{gap:1.5mm 4mm !important;}
+  .doc-grid .item{font-size:8.8pt !important;gap:2mm !important;}
+  .doc-grid .item .n{font-size:7.5pt !important;}
+
+  /* 모델링 vs 렌더링 */
+  .compare{gap:3mm !important;margin:3mm 0 !important;}
+  .cmp-card{page-break-inside:avoid;border:1px solid #bbb !important;}
+  .cmp-head{padding:2mm 3mm !important;}
+  .cmp-head h4{font-size:9.5pt !important;}
+  .cmp-head .ph{font-size:6.8pt !important;}
+  .cmp-visual{height:18mm !important;}
+  .cmp-body{padding:2.5mm 3mm !important;font-size:8.5pt !important;line-height:1.5 !important;}
+
+  /* 번호 리스트 */
+  .num-steps{margin:3mm 0 !important;}
+  .num-steps li{padding:2.5mm 0 2.5mm 11mm !important;font-size:9.2pt !important;line-height:1.5 !important;page-break-inside:avoid;}
+  .num-steps li::before{width:7mm !important;height:7mm !important;font-size:8pt !important;top:2mm !important;}
+
+  /* 수정요청 방법 카드 */
+  /* 이미지 큰 method 카드는 페이지 분할 허용, 단 제목+첫 줄은 같이 가게 */
+  .method{padding:3mm 4mm !important;margin-top:3mm !important;border:1px solid #bbb !important;page-break-inside:auto;}
+  .method .mh{gap:3mm !important;margin-bottom:1.5mm !important;page-break-after:avoid;}
+  .method .mh .mn{width:7mm !important;height:7mm !important;font-size:9pt !important;border-radius:2mm !important;}
+  .method .mh h4{font-size:10.5pt !important;}
+  .method p{font-size:9pt !important;line-height:1.55 !important;page-break-after:avoid;}
+
+  /* 이미지 placeholder */
+  .imgph{padding:3mm !important;font-size:8.5pt !important;margin:2mm 0 !important;}
+  .imgph .pic{font-size:14pt !important;margin-bottom:1mm !important;}
+
+  /* FAQ */
+  details.faq{margin-bottom:2mm !important;}
+  details.faq > summary{padding:3mm 4mm !important;font-size:10pt !important;gap:3mm !important;}
+  details.faq > summary .q{font-size:12pt !important;}
+  .faq-body{padding:0 4mm 3mm !important;font-size:9pt !important;line-height:1.55 !important;}
+
+  /* 마무리 */
+  .outro{padding:5mm 4mm !important;margin-top:4mm !important;page-break-inside:avoid;border:1px solid #bbb !important;}
+  .outro .serif{font-size:11.5pt !important;margin-bottom:2mm !important;}
+  .outro p{font-size:9pt !important;}
+
+  /* footer — 마지막 섹션과 같은 페이지에 들어갈 수 있게 */
+  footer{padding:5mm 0 0 !important;page-break-before:avoid;}
+
+  /* 페이지 분할 규칙 모두 해제 — 연속 흐름 */
+  section#sec2,
+  .timeline > .step:nth-child(5),
+  .pb-before,
+  .timeline > .step:nth-child(3),
+  .timeline > .step:nth-child(4),
+  .compare{page-break-before:auto !important;page-break-inside:auto !important;break-before:auto !important;break-inside:auto !important;}
+
+  /* req-grid (ex4~ex7) — 인쇄 시 한 줄 4열로 줄여서 한 페이지에 다 들어가게 */
+  .req-grid{
+    gap:3mm !important;margin:3mm 0 !important;
+    grid-template-columns:repeat(4,1fr) !important;
+    page-break-inside:avoid !important;
+  }
+  .req-grid figure{border:1px solid #bbb !important;page-break-inside:avoid;}
+  .req-grid img{height:auto !important;}
+  .req-grid figcaption{font-size:7pt !important;padding:1mm 1.5mm !important;}
+  .foot-card .fbrand{font-size:11pt !important;}
+  .foot-card .fco{font-size:8.5pt !important;margin-bottom:3mm !important;}
+  .foot-links{gap:2mm !important;margin-bottom:3mm !important;}
+  .foot-links a{font-size:8pt !important;padding:1.5mm 4mm !important;}
+  .copy{font-size:7.8pt !important;}
+
+  /* 페이지 빈 공간 없이 연속 흐름 */
+  *{
+    page-break-before:auto !important;
+    page-break-after:auto !important;
+    page-break-inside:auto !important;
+    break-before:auto !important;
+    break-after:auto !important;
+    break-inside:auto !important;
+  }
+
+  /* 이미지 및 이미지 컨테이너는 페이지 경계에서 잘리지 않게 보호 */
+  img,
+  figure,
+  .req-grid,
+  .ref-grid figure,
+  .method-pair,
+  .method-single,
+  .rot-ex10,
+  .compare,
+  .cmp-card{
+    page-break-inside:avoid !important;
+    break-inside:avoid !important;
+  }
+  /* method 제목·소개 문단은 바로 뒤 이미지와 떨어지지 않도록 */
+  .method .mh,
+  .method .mh + p,
+  .method p{
+    page-break-after:avoid !important;
+    break-after:avoid !important;
+  }
+  /* 자주 묻는 질문 섹션은 새 페이지에서 시작 */
+  section#faq{
+    page-break-before:always !important;
+    break-before:page !important;
+  }
+</style>
+</head>
+<body>
+
+<!-- 상단 네비
+<div class="topbar">
+  <div class="inner">
+    <a class="logo" href="#top"><span class="dot"><span></span></span><b>CONVIL DESIGN</b></a>
+    <nav class="topnav">
+      <a href="#sec2">진행 과정</a>
+      <a href="#sec3">레퍼런스</a>
+      <a href="#sec4">수정 요청</a>
+      <a href="#sec5">화상 미팅</a>
+      <a href="#faq">자주 묻는 질문</a>
+    </nav>
+  </div>
+</div> -->
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div class="kicker mono">Convil Design · 이용 가이드</div>
+    <h1>디자인을 파는 것이 아닌,<br><em>꿈을 팝니다</em></h1>
+    <p class="sub">컨빌 디자인과 함께하는 모든 과정을 한 곳에 정리했습니다. <br>시작 전 꼭 한 번 읽어봐 주세요.</p>
+    <div class="read-badge"><span class="b">💥</span>반드시 꼼꼼히 다 읽어주세요!</div>
+  </div>
+</header>
+
+<!-- 브랜드 소개 -->
+<section class="brand-intro">
+  <div class="wrap reveal">
+    <div class="eyebrow">우리의 이름</div>
+    <p class="big">CONVIL은 <b>connect village</b>의 줄임말로,<br>디자인을 통해 소중한 가치를 연결합니다.</p>
+    <p class="body">'Connecting the dots' — 모든 점들이 이어져 형태를 이루듯,<br>소중한 가치들이 이어져 우리의 세상을 따뜻하게 만듭니다. <br><br>세상의 작은 가치들이 연결되어 꿈을 실현시킨다는 비전으로, connect village를 줄여 convil이 되었습니다.</p>
+
+    <h3 class="sub-title">컨빌 SNS 채널</h3>
+    <div class="sns-grid">
+      <a class="sns-card" href="https://convil.net/" target="_blank" rel="noopener">
+        <span class="ch">WEBSITE</span><span class="nm">컨빌 홈페이지</span>
+        <span class="ds">포트폴리오와 서비스 안내</span>
+      </a>
+      <a class="sns-card" href="https://www.youtube.com/channel/UCuLL6K3wbBDThigSdJ0rnZQ" target="_blank" rel="noopener">
+        <span class="ch">YOUTUBE</span><span class="nm">컨빌 유튜브</span>
+        <span class="ds">"컨빌의 작업 방식이 궁금하다면?"</span>
+      </a>
+      <a class="sns-card" href="https://www.instagram.com/convil.design/" target="_blank" rel="noopener">
+        <span class="ch">INSTAGRAM</span><span class="nm">컨빌 인스타</span>
+        <span class="ds">"컨빌의 포트폴리오 모음집"</span>
+      </a>
+      <a class="sns-card" href="https://convil.net/" target="_blank" rel="noopener">
+        <span class="ch">BLOG</span><span class="nm">컨빌 블로그</span>
+        <span class="ds">"인테리어비용 50% 절감사례 多"</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- 목차 -->
+<section>
+  <div class="wrap reveal">
+    <div class="eyebrow">🌍 컨빌 이용안내</div>
+    <h2 class="title">이용 안내 한눈에 보기</h2>
+    <p class="lead">아래 다섯 가지 안내를 순서대로 확인해 주세요. 항목을 누르면 바로 이동합니다.</p>
+    <div class="toc">
+      <a href="#sec2"><span class="tn">1</span><span><span class="tt">디자인 프로세스</span><span class="td">진행 과정 6단계</span></span></a>
+      <a href="#sec3"><span class="tn">2</span><span><span class="tt">컨셉·레퍼런스 찾는 법</span><span class="td">요청사항 주시는 법</span></span></a>
+      <a href="#sec4"><span class="tn">3</span><span><span class="tt">수정요청 예시</span><span class="td">4가지 정리 방법</span></span></a>
+      <a href="#sec5"><span class="tn">4</span><span><span class="tt">화상 미팅 안내</span><span class="td">미팅 전 확인사항</span></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- 2. 디자인 프로세스 -->
+<section id="sec2" class="anchor">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="eyebrow"><span class="num">01</span> · 디자인 프로세스</div>
+      <h2 class="title">📣 디자인 프로세스 (진행 과정)</h2>
+      <h3 class="sub-title">소통은 이메일과 화상회의로 진행됩니다</h3>
+      <p class="body">프로젝트의 모든 안내와 주요 의사결정은 이메일과 화상회의를 통해 체계적으로 진행됩니다.<br>정해진 회의 시간에 디자인 검토와 의견 조율을 집중적으로 진행하여, <br>더 정확한 소통과 높은 완성도의 결과물을 드립니다. <br><br>화상미팅에서는 담당 디자이너가 공간 기획 의도와 디자인 방향성을 상세히 설명드리며, <br>궁금하신 부분은 화상미팅에서 언제든 질문하실 수 있습니다.</p>
+    </div>
+
+    <!-- 수정 규칙 -->
+    <div class="rules reveal">
+      <div class="eyebrow mono" style="color:var(--brass-soft);">※ 필독 · Revision policy</div>
+      <h3>수정 안내</h3>
+      <ul class="rule-list">
+        <li><span class="rule-num">01</span><span>수정은 요청사항의 <span class="hl">50% 이내에서 2회 무상</span>으로 진행되며, <br>이후에는 추가 비용이 발생할 수 있습니다.</span></li>
+        <li><span class="rule-num">02</span><span>수정사항은 <strong>한 분께서 한꺼번에 취합</strong>하여 하나의 형태로 정리해, <br><strong>화상회의 때</strong> 전달해 주세요.</span></li>
+        <li><span class="rule-num">03</span><span>효율적인 진행을 위해 <span class="hl">화상미팅에서 전달된 수정사항만</span><br> 공식 수정 요청으로 인정됩니다.</span></li>
+      </ul>
+    </div>
+
+    <div class="reveal">
+      <h3 class="sub-title">진행 과정 6단계</h3>
+      <p class="lead" style="margin-bottom:8px;">각 단계를 눌러 자세한 내용을 확인하세요.</p>
+    </div>
+
+    <div class="timeline reveal">
+
+      <div class="step">
+        <div class="step-circle"><div class="l mono">Step</div><div class="n">1</div></div>
+        <details class="step-d">
+          <summary>구글 폼 설문지 작성 <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="step-content">안내드린 구글 폼 설문지를 반드시 먼저 작성해 주세요. <br>설문이 작성되어야 디자인 작업에 착수할 수 있습니다.</div>
+        </details>
+      </div>
+
+      <div class="step">
+        <div class="step-circle"><div class="l mono">Step</div><div class="n">2</div></div>
+        <details class="step-d">
+          <summary>현장 출장 <span class="tag">필요시</span> <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="step-content">현장 컨설팅 시에는 영상을 촬영합니다. <br>내부 디자이너들과 영상을 함께 보며 현장 상황을 공유하고 회의 자료로 활용하기 위함이니 <br>양해 부탁드립니다.</div>
+        </details>
+      </div>
+
+      <div class="step">
+        <div class="step-circle"><div class="l mono">Step</div><div class="n">3</div></div>
+        <details class="step-d">
+          <summary>온라인 킥오프 미팅 <span class="tag">현장출장 시 제외</span> <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="step-content">
+            <p style="margin-bottom:12px;"><strong>킥오프 전날까지</strong> 아래 자료를 보내주세요. <br>자료가 정확하고 빠를수록 결과물의 완성도가 높아집니다.</p>
+            <div class="docbox">
+              <div class="dh">킥오프 전날까지 보내주실 자료 <span class="mail">convilpro@gmail.com</span></div>
+              <div class="doc-grid">
+                <div class="item"><span class="n">01</span><span>꼭 들어가야 하는 집기 스펙 (가로·세로·높이)</span></div>
+                <div class="item"><span class="n">02</span><span>필요한 공간과 인원 수</span></div>
+                <div class="item"><span class="n">03</span><span>원하시는 분위기·컨셉 참고 사진</span></div>
+                <div class="item"><span class="n">04</span><span>현장 도면 (부동산·관리사무소 문의)</span></div>
+                <div class="item"><span class="n">05</span><span>업체명, 로고 파일</span></div>
+                <div class="item"><span class="n">06</span><span>레퍼런스 이미지</span></div>
+                <div class="item"><span class="n">07</span><span>요청사항</span></div>
+              </div>
+            </div>
+            <p class="mini-note">화상회의 링크는 전날 미리 보내드립니다. <br>현장출장을 요청하신 분들도 참고 자료는 메일로 보내주세요(킥오프 사전 화상미팅은 제외). <br>컨셉·기획 없이 기획부터 맡겨주시는 경우, 컨셉 기획비용은 별도로 책정됩니다.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="step">
+        <div class="step-circle"><div class="l mono">Step</div><div class="n">4</div></div>
+        <details class="step-d">
+          <summary>1차 시안 제작 → <span class="blue" style="margin-left:4px;">1차 화상미팅</span> <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="step-content">
+            <p style="margin-bottom:12px;">1차 시안(레이아웃 제안서)을 메일로 전송드린 뒤, <br>화상미팅에서 담당 디자이너가 디자인 의도와 공간 구성을 상세히 설명드립니다. <br><br>검토 후 수정사항은 내부 협의를 거쳐 하나의 의견으로 정리해 주세요.</p>
+            <p style="margin-bottom:14px;">1차 화상미팅에는 <strong>최종 의사결정권자 또는 의견을 취합해 전달할 담당자 1인 이상</strong>이 <br>반드시 참석해, 정리된 수정 요청을 일괄 전달해 주셔야 합니다. <br><br><span class="red">화상미팅 중 전달된 수정사항만</span> 공식 수정 요청으로 반영·카운트됩니다. (무료 수정 2회)</p>
+
+            <div class="callout tip" style="margin-bottom:18px;"><span class="ic">🧊</span><span>레이아웃 제안서는 완성 시안이 아닌 <strong>스케치업 모델링 시안</strong>으로 전송됩니다. <br>모든 수정을 거친 뒤, 마지막에 렌더링된 최종 3D 시안을 제공해 드립니다.</span></div>
+
+            <div class="compare">
+              <div class="cmp-card">
+                <div class="cmp-head"><h4>모델링 시안</h4><span class="ph">A · DRAFT</span></div>
+                <div class="box_img">
+                  <img src="image/modeling.jpg" alt="모델링 시안 예시 이미지" style="width:100%;height:auto;">
+                </div>
+                <div class="cmp-body">
+                  <p>일반적으로 렌더링된 시안에 비해 디테일이 떨어질 수 있지만, 기본 구조와 형태를 명확하게 나타낼 수 있습니다.<br><br> 주로 모델링은 초기 디자인 구상, 아이디어 스케치, 구조 및 형태의 검토 등에 사용됩니다. <br><br>거의 프로젝트의 초기 단계에서 개념을 빠르게 시각화하고, 수정 및 피드백을 받는 데 유리하다고 보시면 됩니다</p>
+                  <div class="cmp-tags"><span>구조 검토</span><span>빠른 수정</span><span>초기 단계</span></div>
+                </div>
+              </div>
+              <div class="cmp-card">
+                <div class="cmp-head"><h4>렌더링 시안</h4><span class="ph">B · FINAL</span></div>
+                <div class="box_img">
+                  <img src="image/rendering.jpg" alt="렌더링 시안 예시 이미지" style="width:100%;height:auto;">
+                </div>
+                <div class="cmp-body">
+                  <p>렌더링된 시안은 고화질 그래픽과 사실적인 텍스처, 조명, 그림자 효과 등을 포함합니다. <br><br>현실과 가까운 모습을 보여주기 위해 재질, 반사, 굴절 등 다양한 시각적 요소가 포함됩니다. <br><br>매우 정교한 디테일과 현실적인 질감을 제공하여 최종 결과물의 외관을 정확하게 예측할 수 있고 건축물의 외관, 내부 인테리어, 제품 디자인 등의 최종 모습과 매우 유사하다는 특징이 있어요. <br><br>그러나 렌더링 작업은 시간이 꽤 많이 걸리는 작업이며 특히 고품질의 이미지를 생성하기 위해 많은 컴퓨팅 자원이 필요하고 한 프레임을 렌더링하는 데 몇 분에서 몇 시간까지 걸릴 수 있답니다.</p>
+                  <div class="cmp-tags"><span>사실적 질감</span><span>고화질</span><span>최종 납품</span></div>
+                </div>
+              </div>
+            </div>
+            <p style="font-size:15px;color:var(--ink-soft);">그래서 수정은 <strong style="color:var(--sage);">모델링 시안</strong>에서 받고, 최종 수정까지 반영된 마지막에 <strong style="color:var(--sage);">렌더링 시안</strong>으로 납품해 드립니다.</p>
+          </div>
+        </details>
+      </div>
+
+      <div class="step">
+        <div class="step-circle"><div class="l mono">Step</div><div class="n">5</div></div>
+        <details class="step-d">
+          <summary>2차 시안 제작 → <span class="blue" style="margin-left:4px;">2차 화상미팅</span> <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="step-content">2차 시안(레이아웃 제안서)을 메일로 전송드립니다. <br>검토 후 수정사항은 다시 하나의 의견으로 정리해 주세요. <br>화상미팅에는 의사결정권자 또는 담당자 1인 이상이 반드시 참석해 주셔야 하며, <br><span class="red">화상미팅 중 전달된 수정사항만</span> 공식 수정 요청으로 반영·카운트되니<br> 누락 없이 검토 후 참석 부탁드립니다.</div>
+        </details>
+      </div>
+
+      <div class="step">
+        <div class="step-circle" style="border-color:var(--sage);background:var(--sage);"><div class="l mono" style="color:var(--brass-soft);">Final</div><div class="n" style="color:#fff;">6</div></div>
+        <details class="step-d">
+          <summary>최종 도면 및 3D 시안 납품 <svg class="chev" width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+          <div class="step-content">메일로 수정을 마무리한 뒤, 렌더링된 최종 3D 시안과 도면을 메일로 보내드립니다.</div>
+        </details>
+      </div>
+
+    </div>
+
+    <div class="outro reveal">
+      <span class="serif">대부분의 고객님께서<br>1~2차 수정에서 만족하실 결과물을 받으십니다.</span>
+      <p>수정사항에 큰 걱정 안 하셔도 됩니다. 중간 공유사항을 꼼꼼히 확인해 주시고 화상미팅에 참석해 주세요. (작업물은 컨빌디자인의 SNS에 게시될 수 있습니다.)</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 컨셉·레퍼런스 -->
+<section id="sec3" class="anchor">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="num">02</span> · 컨셉 &amp; 레퍼런스</div>
+    <h2 class="title">원하는 컨셉과 레퍼런스 찾고,<br>요청사항 주시는 법</h2>
+
+    <h3 class="sub-title">💡 레퍼런스 사진이 왜 중요할까?</h3>
+    <p class="body">레퍼런스 사진을 자세히 제공하면 디자인에 대한 기대치를 명확히 공유할 수 있고, <br>말로 설명하기 어려운 부분을 시각적으로 표현할 수 있습니다.<br> 오해를 줄이고 디자이너와의 소통을 원활하게 해줍니다.</p>
+    <p class="body">또한 프로젝트의 전반적인 분위기나 컨셉을 결정하는 기준이 됩니다. <br>덕분에 디자이너가 색감, 가구 배치, 마감재 선택 등을 더 빠르고 정확하게 제안할 수 있고, <br>결과적으로 수정 작업을 최소화해 시간과 비용을 절감할 수 있습니다.</p>
+
+    <div class="callout"><span class="ic">💡</span><span>원하는 컨셉의 인테리어, 레퍼런스 사진은 <strong>핀터레스트·인스타그램</strong>에서 쉽게 찾으실 수 있습니다. <br>(네이버 사진 등 어떤 사진이라도 괜찮습니다.)</span></div>
+
+    <div class="ref-grid">
+      <figure><img src="image/ex1.png" alt="레퍼런스 검색 예시 1"><figcaption>핀터레스트</figcaption></figure>
+      <figure><img src="image/ex2.png" alt="레퍼런스 검색 예시 2"><figcaption>인스타그램</figcaption></figure>
+      <figure><img src="image/ex3.png" alt="레퍼런스 검색 예시 3"><figcaption>네이버</figcaption></figure>
+    </div>
+
+    <h3 class="sub-title pb-before">레퍼런스 찾는 3단계</h3>
+    <ol class="num-steps">
+      <li>원하시는 공간 컨셉을 검색하면 다양한 사진이 나옵니다.</li>
+      <li>내 공간에 적용했으면 하는 사진을 고릅니다.</li>
+      <li>고른 사진들을 모아, 요청사항과 함께 보내주세요.</li>
+    </ol>
+
+    <div class="callout tip"><span class="ic">✍️</span><span><strong>요청사항을 구체적으로 주실수록</strong> 더욱 공간에 맞는 디자인이 잘 나옵니다. <br>"똑같이 하면 어쩌지?" 걱정은 안 하셔도 됩니다 🙂 <br>고객님이 원하시는 컨셉을 참고해, 더 좋은 방향으로 제안드릴 부분은 제안드립니다.</span></div>
+
+    <p class="body">디자이너는 고객님 본인이 아닙니다. 즉, 고객님의 머릿속을 그대로 구현할 수는 없습니다. <br>그렇기 때문에 정확한 요청사항과 원하시는 컨셉을 알려주시는 것이 정말 중요합니다. <br>꿈꾸신 그 공간을 저희와 함께 공유해 예쁘게 잡아가는 단계이니, 레퍼런스 사진과 요청사항을 꼭 보내주세요. <br>(직접 정리가 어려우시면 사진만 찾아주셔도 괜찮습니다.)</p>
+
+    <div class="req-grid">
+      <img src="image/ex4.png" alt="요청사항 작성 예시 4">
+      <img src="image/ex5.png" alt="요청사항 작성 예시 5">
+      <img src="image/ex6.png" alt="요청사항 작성 예시 6">
+      <img src="image/ex7.png" alt="요청사항 작성 예시 7">
+    </div>
+  </div>
+</section>
+
+<!-- 4. 수정요청 예시 -->
+<section id="sec4" class="anchor">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="num">03</span> · 수정 요청</div>
+    <h2 class="title">수정요청 예시</h2>
+    <div class="callout"><span class="ic">※</span><span><strong style="color:var(--red);">필독</strong><br>수정은 요청사항의 50% 이내에서 <strong style="color:var(--red);">2회 무상</strong> 진행되며, 이후에는 추가 비용이 발생할 수 있습니다. <br>수정사항이 있으시면 <strong style="color:var(--red);">한꺼번에 취합</strong>해 <strong style="color:var(--red);">화상 회의 때</strong> 말씀해주세요.</span></div>
+    <p class="body">아래 네 가지 중 편하신 방법으로 정리해 주시면 됩니다. <br>무엇을 원하시는지 구체적으로 적어주실수록, 다음 디자인에 정확히 반영된 모습을 보실 수 있습니다.</p>
+
+    <div class="method">
+      <div class="mh"><span class="mn">1</span><h4>레이아웃 제안서에 체크해서 보내기</h4></div>
+      <p>최종 시안 전, 3D 모델링된 모습을 담은 〈레이아웃 제안서〉 초안을 공유해 드립니다. <br>그 위에 직접 체크하거나 수기로 적어 전달해 주시면 됩니다.</p>
+      <div class="method-pair">
+        <img src="image/ex8.png" alt="" style="--ratio:2.37">
+        <img src="image/ex9.png" alt="" style="--ratio:1.82">
+      </div>
+      <div class="rot-ex10">
+        <img src="image/ex10.png" alt="">
+      </div>
+    </div>
+
+    <div class="method">
+      <div class="mh"><span class="mn">2</span><h4>굿노트에 정리해서 보내기</h4></div>
+      <p>태블릿 굿노트 등에 제안서를 띄워 메모·표시하여 정리해 주셔도 됩니다.</p>
+      <div class="method-single">
+        <img src="image/ex11.png" alt="">
+      </div>
+    </div>
+
+    <div class="method">
+      <div class="mh"><span class="mn">3</span><h4>PPT로 정리해서 보내기</h4></div>
+      <p>PPT에 항목별로 정리해 주시면 한눈에 확인하기 좋습니다.</p>
+      <div class="method-pair">
+        <img src="image/ex12.png" alt="" style="--ratio:1.423">
+        <img src="image/ex13.png" alt="" style="--ratio:1.326">
+      </div>
+    </div>
+
+    <div class="method">
+      <div class="mh"><span class="mn">4</span><h4>카카오톡 텍스트로 보내기</h4></div>
+      <p>카톡으로 보내실 때는 항목을 구분하여 한 번에 전달해 주세요. <br>항목별로 정리해 주시면 다음 작업에 적용된 모습을 보실 수 있습니다.</p>
+      <div class="method-single">
+        <img src="image/ex14.png" alt="">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. 화상 미팅 안내 -->
+<section id="sec5" class="anchor">
+  <div class="wrap reveal">
+    <div class="eyebrow"><span class="num">04</span> · 화상 미팅</div>
+    <h2 class="title">화상 미팅 안내사항</h2>
+
+    <h3 class="sub-title">미팅 전 확인해 주세요</h3>
+    <ol class="num-steps">
+      <li>화상미팅에는 <strong>최종 의사결정권자</strong> <br>또는 내부 의견을 취합해 전달할 수 있는 담당자 <strong>1인 이상</strong>이 반드시 참석해 주세요.</li>
+      <li>수정 요청사항은 사전에 <strong>하나의 의견으로 취합</strong>하여 일괄 전달해 주세요.</li>
+      <li><strong>화상미팅 중 전달된 수정사항만</strong> 공식 수정 요청으로 반영·카운트됩니다. (무료 수정 2회)</li>
+      <li>화상회의 링크는 미팅 <strong>전날 미리</strong> 보내드립니다.</li>
+    </ol>
+    <div class="method-pair">
+      <img src="image/ex15.png" alt="">
+      <img src="image/ex16.png" alt="">
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="anchor">
+  <div class="wrap reveal">
+    <div class="eyebrow">🌍 자주 묻는 질문</div>
+    <h2 class="title">자주 묻는 질문</h2>
+
+    <details class="faq">
+      <summary><span class="q">Q</span>주거 인테리어도 하나요? <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="faq-body">네! 상가 인테리어뿐만 아니라 주거 인테리어 서비스도 제공하고 있습니다. <br>또한 100평 이상의 대규모 프로젝트도 가능합니다. <br>포트폴리오는 <a href="https://convil.net/" target="_blank" rel="noopener">컨빌 홈페이지</a>에 자세히 나와 있습니다.</div>
+    </details>
+
+    <details class="faq">
+      <summary><span class="q">Q</span>현장 출장이 꼭 필요할까요? <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="faq-body"><strong>현장 출장이 필수인 경우:</strong> 도면이 없거나, 실측을 못 하거나, 실측해 줄 사람이 없을 때입니다. <br>도면이나 실측 자료가 있으면 출장 없이도 도면 작업을 진행할 수 있습니다. <br>다만 자료가 있어도 출장을 원하시는 분들은, <br>설계자가 현장을 더 잘 이해하고 실시간 소통·컨설팅이 가능한 장점이 있습니다.</div>
+    </details>
+
+    <details class="faq">
+      <summary><span class="q">Q</span>현장 미팅 시간은 얼마나 걸리나요? <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="faq-body">평균적으로 <strong>1~2시간</strong> 정도 소요되며, 빠르게 실측만 해야 하는 경우는 <strong>30분</strong>에도 가능합니다.</div>
+    </details>
+
+    <details class="faq">
+      <summary><span class="q">Q</span>별도로 제공되는 모바일 앱이 있나요? <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="faq-body"><strong>컨빌프로 앱</strong>이 출시 예정입니다. <br>컨빌에서 받은 도면으로 시공하실 때 작업자를 구하기 어려우셨던 불편을 해결하기 위해 개발되었습니다. <br>반셀프·셀프 인테리어 시 어려운 일정 관리, 작업자 관리를 빠르게 해결할 수 있는 앱을 기대해 주세요.</div>
+    </details>
+
+    <details class="faq">
+      <summary><span class="q">Q</span>시안 결과물의 저작권은 누구의 것인가요? <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="faq-body">저작권은 컨빌디자인에 귀속되며, 컨빌의 포트폴리오에 사용될 수 있습니다.<br>(대부분의 디자인 서비스 회사가 동일한 방식)<br> <strong>상업적 이용 권한 및 CI·BI 등록 권한은 사용자(구매자)에게</strong> 있으며, <br>저작권까지 함께 구매를 원하시면 별도로 문의해 주세요.</div>
+    </details>
+
+    <details class="faq">
+      <summary><span class="q">Q</span>시공도 하시나요? <svg class="chev" width="18" height="18" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+      <div class="faq-body">컨빌 디자인은 시공을 위한 <strong>설계 및 디자인 도면</strong>을 제작하는 회사입니다. <br>자체 턴키 공사는 진행하지 않지만, 믿을 수 있는 협력 시공사를 연결해 드립니다. <br>필요시 견적서(추가 컨설팅 비용)를 결제해 주시면 견적도 작성해 드립니다. <br>컨빌의 도면으로 작업자를 구해 반셀프 인테리어도 가능하며, <br>작업자·감리자를 구하기 어려운 경우 예약제로 반셀프 인테리어 컨설팅을 진행합니다. <br>현재 서울·부산·경기·경남 등 전국적으로 신뢰할 수 있는 시공 작업자를 유치하고 있습니다.</div>
+    </details>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap reveal">
+    <div class="foot-card">
+      <div class="fbrand">컨빌디자인 · Convil Design</div>
+      <div class="fco">주식회사 컨빌 · Convil Inc.</div>
+      <div class="copy">© 2026. Convil Inc. all rights reserved</div>
+    </div>
+  </div>
+</footer>
+
+<div class="float-btns">
+  <button type="button" class="a4-btn" id="a4Btn" aria-label="A4 미리보기">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <rect x="3" y="1.5" width="10" height="13" rx="1" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M5.5 5h5M5.5 7.5h5M5.5 10h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+    </svg>
+    <span class="label">A4 미리보기</span>
+  </button>
+  <button type="button" class="pdf-btn" id="pdfBtn" aria-label="PDF로 저장하기">
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path d="M8 1.5v8.5m0 0L4.5 6.5M8 10l3.5-3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M2.5 11.5v2A1 1 0 003.5 14.5h9a1 1 0 001-1v-2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+    PDF로 저장
+  </button>
+</div>
+
+<script>
+  // 새로고침 시 브라우저의 자동 스크롤 복원 비활성화 → 항상 맨 위에서 시작
+  // (scroll-behavior:smooth 와 결합되면 자동 스크롤이 부드럽게 내려가는 것처럼 보임)
+  if("scrollRestoration" in history){ history.scrollRestoration = "manual"; }
+  window.addEventListener("load", ()=>{ window.scrollTo(0,0); });
+
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); obs.unobserve(e.target);} });
+  },{threshold:0.1});
+  document.querySelectorAll(".reveal").forEach(el=>obs.observe(el));
+
+  // PDF 저장: 모든 details 펼치고 인쇄 다이얼로그 호출
+  (function(){
+    const btn = document.getElementById("pdfBtn");
+    if(!btn) return;
+    btn.addEventListener("click", ()=>{
+      const allDetails = document.querySelectorAll("details");
+      const prevState = [];
+      allDetails.forEach(d => { prevState.push(d.open); d.open = true; });
+
+      const restore = ()=>{
+        allDetails.forEach((d,i)=>{ d.open = prevState[i]; });
+        window.removeEventListener("afterprint", restore);
+      };
+      window.addEventListener("afterprint", restore);
+
+      setTimeout(()=>window.print(), 120);
+    });
+  })();
+
+  // A4 미리보기 토글: a4Styles 시트의 media 속성을 "print" ↔ "all" 로 전환
+  (function(){
+    const btn = document.getElementById("a4Btn");
+    const sheet = document.getElementById("a4Styles");
+    if(!btn || !sheet) return;
+    const label = btn.querySelector(".label");
+    let savedDetails = null;
+
+    btn.addEventListener("click", ()=>{
+      const turningOn = !document.body.classList.contains("a4-preview");
+      if(turningOn){
+        document.body.classList.add("a4-preview");
+        sheet.media = "all";
+        btn.classList.add("on");
+        if(label) label.textContent = "원래대로";
+        // details 모두 펼침 (이전 상태 저장)
+        const ds = document.querySelectorAll("details");
+        savedDetails = [];
+        ds.forEach(d => { savedDetails.push(d.open); d.open = true; });
+        window.scrollTo({top:0,behavior:"smooth"});
+      }else{
+        document.body.classList.remove("a4-preview");
+        sheet.media = "print";
+        btn.classList.remove("on");
+        if(label) label.textContent = "A4 미리보기";
+        if(savedDetails){
+          const ds = document.querySelectorAll("details");
+          ds.forEach((d,i)=>{ d.open = savedDetails[i] ?? false; });
+          savedDetails = null;
+        }
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>
