@@ -361,6 +361,54 @@
     .step-circle .s-num{font-size:25.5px;}
     .timeline::before{left:26px;}
     .brand-sub{display:none;}
+
+    /* 본문 여백/타이포 모바일 최적화 */
+    .wrap{padding:0 18px;}
+    section{padding:44px 0;}
+    .hero{padding:54px 0 44px;}
+    h2.title{font-size:clamp(24px,6vw,32px);}
+
+    /* 콜아웃·룰 박스 */
+    .callout{padding:14px 16px;font-size:14.5px;}
+    .rules::after{font-size:84px;right:18px;bottom:-10px;}
+
+    /* 이메일 박스 (가로 스크롤 방지) */
+    .docbox .dh{flex-direction:column;align-items:flex-start;gap:8px;}
+    .docbox .dh .mail{font-size:16px;padding:6px 10px;word-break:break-all;max-width:100%;}
+
+    /* 채널 카드 */
+    .ch-card{padding:22px 18px;}
+    .ch-card h3{font-size:17px;}
+
+    /* timeline step 텍스트·태그 */
+    .step-body{padding:18px;}
+    .step-body h3{font-size:17px;line-height:1.45;}
+    .step-body h3 .tag{display:inline-block;margin-left:0;margin-top:4px;}
+
+    /* compare 카드 */
+    .cmp-card .cmp-body{padding:18px;}
+
+    /* outro */
+    .outro{padding:28px 20px;}
+    .outro .serif{font-size:20px;}
+
+    /* footer */
+    .foot-card .fbrand{font-size:18px;}
+    .foot-links{flex-direction:column;align-items:stretch;gap:8px;}
+    .foot-links a{text-align:center;}
+  }
+
+  /* 매우 좁은 화면 (iPhone SE 등 360px 이하) */
+  @media (max-width:380px){
+    .wrap{padding:0 14px;}
+    h2.title{font-size:22px;}
+    .docbox .dh .mail{font-size:14px;}
+    .rules{padding:24px 18px;}
+    .rules::after{font-size:64px;}
+    .step{padding-left:60px;}
+    .step-circle{width:46px;height:46px;}
+    .step-circle .s-num{font-size:20px;}
+    .timeline::before{left:22px;}
   }
 
   /* 스크롤 등장 */
