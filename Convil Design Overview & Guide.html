@@ -436,11 +436,14 @@
   @media (max-width:640px){
     .sns-grid,.toc,.compare,.doc-grid{grid-template-columns:1fr;}
     .rules{padding:32px 24px;}
-    .step{padding-left:70px;}
-    .step-circle{width:54px;height:54px;}
-    .step-circle .n{font-size:22px;}
-    .timeline::before{left:26px;}
     .topbar .logo b{display:none;}
+
+    /* timeline step: 동그라미 위, 내용 아래 (전체 너비) */
+    .timeline::before{display:none;}
+    .step{padding-left:0;padding-bottom:24px;display:flex;flex-direction:column;gap:10px;}
+    .step-circle{position:static;width:48px;height:48px;}
+    .step-circle .n{font-size:20px;}
+    .step-d,.step > details{width:100%;}
 
     /* 본문 여백/타이포 모바일 최적화 */
     .wrap{padding:0 18px;}
@@ -492,10 +495,8 @@
     .docbox .dh .mail{font-size:14px;}
     .rules{padding:24px 18px;}
     .rules::after{font-size:72px;}
-    .step{padding-left:60px;}
-    .step-circle{width:46px;height:46px;}
+    .step-circle{width:44px;height:44px;}
     .step-circle .n{font-size:18px;}
-    .timeline::before{left:22px;}
   }
 
   /* reveal */
