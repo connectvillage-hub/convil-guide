@@ -438,10 +438,16 @@
     .rules{padding:32px 24px;}
     .topbar .logo b{display:none;}
 
-    /* timeline step: 동그라미 위, 내용 아래 (전체 너비) */
+    /* timeline step: STEP 라벨 가로, 내용 아래 전체 너비 */
     .timeline::before{display:none;}
     .step{padding-left:0;padding-bottom:24px;display:flex;flex-direction:column;gap:10px;}
-    .step-circle{position:static;width:48px;height:48px;}
+    .step-circle{
+      position:static;width:auto;height:auto;
+      background:transparent;border:none;border-radius:0;
+      flex-direction:row;align-items:baseline;justify-content:flex-start;gap:8px;
+      padding:0 2px;
+    }
+    .step-circle .l{font-size:11px;letter-spacing:0.14em;}
     .step-circle .n{font-size:20px;}
     .step-d,.step > details{width:100%;}
 
@@ -471,8 +477,8 @@
     .cmp-card .cmp-body{padding:18px;}
 
     /* timeline step 내부 여백 */
-    .step-content{padding:0 4px 18px;}
-    .step-body{padding:18px;}
+    details.step-d > summary{padding:18px 20px;font-size:16.5px;}
+    .step-content{padding:0 20px 20px;font-size:15.5px;line-height:1.75;}
 
     /* 회전 이미지 ex10 */
     .rot-ex10{width:100%;}

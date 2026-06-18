@@ -357,11 +357,17 @@
     .rules{padding:32px 24px;}
     .brand-sub{display:none;}
 
-    /* timeline step: 동그라미 위, 내용 아래 (전체 너비) */
+    /* timeline step: STEP 라벨 가로, 내용 아래 전체 너비 */
     .timeline::before{display:none;}
     .step{padding-left:0;padding-bottom:32px;display:flex;flex-direction:column;gap:10px;}
-    .step-node{position:static;width:48px;}
-    .step-circle{width:48px;height:48px;}
+    .step-node{position:static;width:auto;text-align:left;}
+    .step-circle{
+      width:auto;height:auto;
+      background:transparent;border:none;border-radius:0;
+      flex-direction:row;align-items:baseline;justify-content:flex-start;gap:8px;
+      padding:0 2px;
+    }
+    .step-circle .s-label{font-size:11px;letter-spacing:0.14em;}
     .step-circle .s-num{font-size:22px;}
     .step-body{padding-top:0;width:100%;}
 
