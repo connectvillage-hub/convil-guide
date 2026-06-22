@@ -1,7 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/", "destination": "/overview.html" }
+  "redirects": [
+    { "source": "/", "destination": "/overview", "permanent": false }
   ]
 }
